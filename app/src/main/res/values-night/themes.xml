@@ -14,4 +14,8 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="PrefsTheme" parent="PreferenceThemeOverlay.v14.Material">
+        <item name="android:layout">@layout/fragment_settings</item>
+    </style>
+
 </resources>

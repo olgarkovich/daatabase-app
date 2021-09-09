@@ -1,4 +1,4 @@
-package com.example.databaseapp.addItem
+package com.example.databaseapp.view.addItem
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

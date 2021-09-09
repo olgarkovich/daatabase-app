@@ -1,14 +1,20 @@
-package com.example.databaseapp.settings
+package com.example.databaseapp.view.settings
 
+import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toolbar
 import androidx.preference.PreferenceFragmentCompat
+import com.example.databaseapp.view.MainActivity
 import com.example.databaseapp.R
 
 class SettingsFragment : PreferenceFragmentCompat() {
+
+    private lateinit var owner: MainActivity
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        owner = context as MainActivity
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,9 +23,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<Toolbar>(R.id.settingsToolbar)?.let {
-            it.title = "Settings"
-        }
+
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

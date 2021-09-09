@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.databaseapp.main.MainFragment">
+        android:name="com.example.databaseapp.view.main.MainFragment">
         <action
             android:id="@+id/action_mainFragment_to_settingsFragment"
             app:destination="@id/settingsFragment"
@@ -18,12 +18,12 @@
 
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.example.databaseapp.settings.SettingsFragment"
+        android:name="com.example.databaseapp.view.settings.SettingsFragment"
         android:label="SettingsFragment" />
 
     <fragment
         android:id="@+id/addItemFragment"
-        android:name="com.example.databaseapp.addItem.AddItemFragment"
+        android:name="com.example.databaseapp.view.addItem.AddItemFragment"
         android:label="AddItemFragment" />
 
 </navigation>

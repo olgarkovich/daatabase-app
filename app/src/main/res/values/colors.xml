@@ -13,4 +13,5 @@
     <color name="dark_green">#004203</color>
     <color name="pink">#EA6C97</color>
     <color name="dark_pink">#DD2060</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>
