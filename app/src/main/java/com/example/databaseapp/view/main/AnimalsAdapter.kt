@@ -6,15 +6,15 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.databaseapp.databinding.ItemAnimalBinding
 import com.example.databaseapp.model.Animal
+import com.example.databaseapp.view.AnimalListener
 
-class AnimalsAdapter(mainFragment: MainFragment) : ListAdapter<Animal, AnimalViewHolder>(itemComparator) {
-
-    var listener: ((Int) -> Unit)? = null
+class AnimalsAdapter(private val listener: AnimalListener) :
+    ListAdapter<Animal, AnimalViewHolder>(itemComparator) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimalViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemAnimalBinding.inflate(layoutInflater, parent, false)
-        return AnimalViewHolder(binding)
+        return AnimalViewHolder(binding, listener)
     }
 
     override fun onBindViewHolder(holder: AnimalViewHolder, position: Int) {

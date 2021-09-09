@@ -6,14 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.databaseapp.view.MainActivity
 import com.example.databaseapp.R
 import com.example.databaseapp.databinding.FragmentMainBinding
 import com.example.databaseapp.model.Animal
+import com.example.databaseapp.view.AnimalListener
 
-class MainFragment : Fragment(), View.OnClickListener {
+class MainFragment : Fragment(), View.OnClickListener, AnimalListener {
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
@@ -44,7 +46,7 @@ class MainFragment : Fragment(), View.OnClickListener {
     }
 
     private fun initView() {
-        owner.title?.text = "Animals"
+        owner.title?.text = resources.getString(R.string.animals)
         owner.settingsIcon?.visibility = View.VISIBLE
 
         owner.settingsIcon?.setOnClickListener(this)
@@ -67,11 +69,23 @@ class MainFragment : Fragment(), View.OnClickListener {
     override fun onClick(view: View) {
         when (view.id) {
             R.id.settings_icon -> {
-                owner.title?.text = "Settings"
+                owner.title?.text = resources.getString(R.string.settings)
                 owner.settingsIcon?.visibility = View.GONE
                 findNavController().navigate(R.id.action_mainFragment_to_settingsFragment)
             }
         }
+    }
+
+    override fun add() {
+        Toast.makeText(owner, "add", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun edit() {
+        Toast.makeText(owner, "edit", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun delete() {
+        Toast.makeText(owner, "delete", Toast.LENGTH_SHORT).show()
     }
 
 }

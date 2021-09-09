@@ -29,7 +29,7 @@
             android:text="@string/name_"
             android:textColor="@color/black"
             android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="@id/content_end"
+            app:layout_constraintEnd_toStartOf="@+id/edit_button"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/title_section_barrier"
             app:layout_constraintTop_toTopOf="parent" />
@@ -51,7 +51,7 @@
             android:text="@string/age_"
             android:textColor="@color/black"
             android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="@id/content_end"
+            app:layout_constraintEnd_toStartOf="@+id/edit_button"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/title_section_barrier"
             app:layout_constraintTop_toBottomOf="@id/name_label" />
@@ -73,7 +73,7 @@
             android:text="@string/breed_"
             android:textColor="@color/black"
             android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="@id/content_end"
+            app:layout_constraintEnd_toStartOf="@+id/delete_button"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/title_section_barrier"
             app:layout_constraintTop_toBottomOf="@id/age_label" />
@@ -100,6 +100,26 @@
             app:barrierDirection="end"
             app:barrierMargin="16dp"
             app:constraint_referenced_ids="name_label, age_label, breed_label" />
+
+        <ImageButton
+            android:id="@+id/edit_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@color/transparent"
+            android:src="@drawable/ic_edit"
+            app:layout_constraintBottom_toTopOf="@+id/delete_button"
+            app:layout_constraintEnd_toStartOf="@+id/content_end"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/delete_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@color/transparent"
+            android:src="@drawable/ic_delete"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/content_end"
+            app:layout_constraintTop_toBottomOf="@+id/edit_button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
