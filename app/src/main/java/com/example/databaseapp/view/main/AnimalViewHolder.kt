@@ -14,14 +14,16 @@ class AnimalViewHolder(
         binding.name.text = animal.name
         binding.age.text = animal.age
         binding.breed.text = animal.breed
+
+        initButtonListeners(animal)
     }
 
-    init {
+    private fun initButtonListeners(animal: Animal) {
         binding.editButton.setOnClickListener {
-            listener.edit()
+            listener.update(animal)
         }
         binding.deleteButton.setOnClickListener {
-            listener.delete()
+            listener.delete(animal)
         }
     }
 }

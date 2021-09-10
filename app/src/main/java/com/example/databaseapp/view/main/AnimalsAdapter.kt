@@ -14,7 +14,7 @@ class AnimalsAdapter(private val listener: AnimalListener) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimalViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemAnimalBinding.inflate(layoutInflater, parent, false)
-        return AnimalViewHolder(binding, listener)
+        return AnimalViewHolder(binding, listener, )
     }
 
     override fun onBindViewHolder(holder: AnimalViewHolder, position: Int) {

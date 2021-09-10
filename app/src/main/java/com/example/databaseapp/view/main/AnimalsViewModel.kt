@@ -12,6 +12,14 @@ class AnimalsViewModel(private val repository: AnimalRepository): ViewModel() {
     fun insert(animal: Animal) = viewModelScope.launch {
         repository.insert(animal)
     }
+
+    fun update(animal: Animal) = viewModelScope.launch {
+        repository.update(animal)
+    }
+
+    fun delete(animal: Animal) = viewModelScope.launch {
+        repository.delete(animal)
+    }
 }
 
 class AnimalViewModelFactory(private val repository: AnimalRepository) : ViewModelProvider.Factory {

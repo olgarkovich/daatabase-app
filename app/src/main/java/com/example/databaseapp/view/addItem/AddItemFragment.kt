@@ -8,16 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.databaseapp.AnimalApplication
 import com.example.databaseapp.R
 import com.example.databaseapp.databinding.FragmentAddItemBinding
-import com.example.databaseapp.databinding.FragmentMainBinding
-import com.example.databaseapp.databinding.ItemAnimalBinding
+import com.example.databaseapp.model.Actions
 import com.example.databaseapp.view.MainActivity
-import com.example.databaseapp.view.main.AnimalViewModelFactory
-import com.example.databaseapp.view.main.AnimalsViewModel
 
 class AddItemFragment : Fragment(), View.OnClickListener {
 
@@ -26,9 +21,25 @@ class AddItemFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentAddItemBinding? = null
     private val binding get() = _binding!!
 
+    private var action = Actions.ADD
+
+    private var currentId = 0
+    private var name = ""
+    private var age = ""
+    private var breed = ""
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         owner = context as MainActivity
+        if (arguments?.getString("action") == Actions.UPDATE.name) {
+            action = Actions.UPDATE
+            currentId = arguments?.getInt("id") ?: 0
+            name = arguments?.getString("name") ?: ""
+            age = arguments?.getString("age") ?: ""
+            breed = arguments?.getString("breed") ?: ""
+        } else {
+            action = Actions.ADD
+        }
     }
 
     override fun onCreateView(
@@ -45,7 +56,17 @@ class AddItemFragment : Fragment(), View.OnClickListener {
     }
 
     private fun initView() {
-        owner.title?.text = getString(R.string.add_animal)
+        if (action == Actions.UPDATE) {
+            owner.title?.text = getString(R.string.update_animal)
+            binding.addAnimalButton.text = getString(R.string.update_animal)
+            binding.nameEditText.setText(name)
+            binding.ageEditText.setText(age)
+            binding.breedEditText.setText(breed)
+        } else {
+            owner.title?.text = getString(R.string.add_animal)
+            binding.addAnimalButton.text = getString(R.string.add_animal)
+        }
+
         owner.settingsIcon?.visibility = View.INVISIBLE
 
         binding.addAnimalButton.setOnClickListener(this)
@@ -55,12 +76,28 @@ class AddItemFragment : Fragment(), View.OnClickListener {
         when (view.id) {
             R.id.add_animal_button -> {
                 if (checkFields()) {
-                    val bundle = bundleOf(
-                        "add" to true,
-                        "name" to binding.nameEditText.text.toString(),
-                        "age" to binding.ageEditText.text.toString(),
-                        "breed" to binding.breedEditText.text.toString())
-                    findNavController().navigate(R.id.action_addItemFragment_to_mainFragment, bundle)
+                    val bundle: Bundle
+                    if (action == Actions.ADD) {
+                        bundle = bundleOf(
+                            "action" to Actions.ADD.name,
+                            "name" to binding.nameEditText.text.toString(),
+                            "age" to binding.ageEditText.text.toString(),
+                            "breed" to binding.breedEditText.text.toString()
+                        )
+                    }
+                    else {
+                        bundle = bundleOf(
+                            "action" to Actions.UPDATE.name,
+                            "id" to currentId,
+                            "name" to binding.nameEditText.text.toString(),
+                            "age" to binding.ageEditText.text.toString(),
+                            "breed" to binding.breedEditText.text.toString()
+                        )
+                    }
+                    findNavController().navigate(
+                        R.id.action_addItemFragment_to_mainFragment,
+                        bundle
+                    )
                 }
             }
         }

@@ -10,11 +10,11 @@ interface AnimalDao {
     @Insert
     suspend fun insert(animal: Animal)
 
-//    @Update
-//    suspend fun update(animal: Animal)
-//
-    @Query("DELETE FROM animalTable")
-    suspend fun deleteAll()
+    @Update
+    suspend fun update(animal: Animal)
+
+    @Delete
+    suspend fun delete(animal: Animal)
 
     @Query("SELECT * FROM animalTable ")
     fun loadAllAnimals(): Flow<List<Animal>>
