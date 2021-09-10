@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="10dp"
     app:cardBackgroundColor="@color/green_80"
     app:cardCornerRadius="20dp"
-    app:cardElevation="0dp"
-    android:layout_margin="10dp">
+    app:cardElevation="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
 
         <TextView
             android:id="@+id/name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/name_"
             android:textColor="@color/black"
@@ -47,7 +47,7 @@
 
         <TextView
             android:id="@+id/age"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/age_"
             android:textColor="@color/black"
@@ -55,7 +55,7 @@
             app:layout_constraintEnd_toStartOf="@+id/edit_button"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/title_section_barrier"
-            app:layout_constraintTop_toBottomOf="@id/name_label" />
+            app:layout_constraintTop_toBottomOf="@id/name" />
 
         <TextView
             android:id="@+id/breed_label"
@@ -69,7 +69,7 @@
 
         <TextView
             android:id="@+id/breed"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/breed_"
             android:textColor="@color/black"
@@ -77,7 +77,7 @@
             app:layout_constraintEnd_toStartOf="@+id/delete_button"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/title_section_barrier"
-            app:layout_constraintTop_toBottomOf="@id/age_label" />
+            app:layout_constraintTop_toBottomOf="@id/age" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/content_start"
