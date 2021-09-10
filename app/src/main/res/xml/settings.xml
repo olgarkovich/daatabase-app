@@ -6,7 +6,7 @@
         android:dialogTitle="Sort by"
         android:entries="@array/sort_by"
         android:entryValues="@array/sort_by"
-        android:key="test_style"
+        android:key="sort"
         android:title="Sort by" />
 
     <CheckBoxPreference

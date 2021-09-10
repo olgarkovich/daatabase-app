@@ -8,11 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.databaseapp.view.MainActivity
 import com.example.databaseapp.R
 import com.example.databaseapp.databinding.FragmentMainBinding
 import com.example.databaseapp.model.Animal
+import com.example.databaseapp.model.SortMode
 import com.example.databaseapp.view.AnimalListener
 
 class MainFragment : Fragment(), View.OnClickListener, AnimalListener {
@@ -58,6 +60,15 @@ class MainFragment : Fragment(), View.OnClickListener, AnimalListener {
         }
 
 
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        Toast.makeText(requireContext(), prefs.getString("sort", SortMode.NAME.name), Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), prefs.getBoolean("database_mode", true).toString(), Toast.LENGTH_SHORT).show()
 
     }
 
