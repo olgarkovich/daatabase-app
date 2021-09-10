@@ -18,8 +18,11 @@ class AnimalsAdapter(private val listener: AnimalListener) :
     }
 
     override fun onBindViewHolder(holder: AnimalViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        val current = getItem(position)
+        holder.bind(current)
     }
+
+
 
     private companion object {
 

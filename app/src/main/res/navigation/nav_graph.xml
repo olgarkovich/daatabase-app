@@ -14,6 +14,14 @@
             app:exitAnim="@anim/exit_to_left"
             app:popEnterAnim="@anim/enter_from_left"
             app:popExitAnim="@anim/exit_to_right" />
+
+        <action
+            android:id="@+id/action_mainFragment_to_addItemFragment"
+            app:destination="@id/addItemFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
 
     <fragment
@@ -24,6 +32,15 @@
     <fragment
         android:id="@+id/addItemFragment"
         android:name="com.example.databaseapp.view.addItem.AddItemFragment"
-        android:label="AddItemFragment" />
+        android:label="AddItemFragment" >
+        <action
+            android:id="@+id/action_addItemFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right"/>
+
+    </fragment>
 
 </navigation>

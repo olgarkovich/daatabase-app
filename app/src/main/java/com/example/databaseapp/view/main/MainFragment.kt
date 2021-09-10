@@ -6,10 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.observe
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.databaseapp.AnimalApplication
 import com.example.databaseapp.view.MainActivity
 import com.example.databaseapp.R
 import com.example.databaseapp.databinding.FragmentMainBinding
@@ -24,11 +27,23 @@ class MainFragment : Fragment(), View.OnClickListener, AnimalListener {
 
     private lateinit var owner: MainActivity
 
-    private val animalAdapter = AnimalsAdapter(this)
+    private var name = ""
+    private var age = ""
+    private var breed = ""
+    private var isAdding = false
+
+    private val animalsViewModel: AnimalsViewModel by viewModels {
+        AnimalViewModelFactory((requireActivity().application as AnimalApplication).repository)
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         owner = context as MainActivity
+
+        name = arguments?.getString("name") ?: ""
+        age = arguments?.getString("age") ?: ""
+        breed = arguments?.getString("breed") ?: ""
+        isAdding = arguments?.getBoolean("add") ?: false
     }
 
     override fun onCreateView(
@@ -53,10 +68,23 @@ class MainFragment : Fragment(), View.OnClickListener, AnimalListener {
 
         owner.settingsIcon?.setOnClickListener(this)
 
-        animalAdapter.submitList(listOf(Animal(0, "aa", "aa", "vv"), Animal(1, "cc", "W", "aa")))
+        if (isAdding) {
+            animalsViewModel.insert(Animal(name, age, breed))
+        }
+
+        val animalAdapter = AnimalsAdapter(this)
         binding.animalRecycler.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = animalAdapter
+        }
+
+        animalsViewModel.allAnimals.observe(owner = requireActivity()) { animals ->
+            animals.let { animalAdapter.submitList(it) }
+        }
+
+        findNavController()
+        binding.fab.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_addItemFragment)
         }
 
 

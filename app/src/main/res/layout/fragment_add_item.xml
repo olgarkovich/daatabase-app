@@ -6,22 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".view.addItem.AddItemFragment">
 
-<!--    <com.google.android.material.appbar.AppBarLayout-->
-<!--        android:id="@+id/app_bar_layout"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent">-->
-
-<!--        <androidx.appcompat.widget.Toolbar-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="?attr/actionBarSize"-->
-<!--            android:fitsSystemWindows="true"-->
-<!--            app:title="Add New Animal"-->
-<!--            app:titleTextColor="@color/white" />-->
-<!--    </com.google.android.material.appbar.AppBarLayout>-->
-
     <TextView
         android:id="@+id/put_data_label"
         android:layout_width="wrap_content"
@@ -32,6 +16,22 @@
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/add_animal_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:background="@drawable/bg_button"
+        android:text="@string/add_animal"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/breed_input_layout"
+        app:layout_constraintVertical_bias="0.513" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/name_input_layout"
@@ -46,6 +46,7 @@
         app:hintTextColor="@color/green_80"
         app:layout_constraintBottom_toTopOf="@+id/age_input_layout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/put_data_label">
 
@@ -70,6 +71,7 @@
         app:hintTextColor="@color/green_80"
         app:layout_constraintBottom_toTopOf="@+id/breed_input_layout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name_input_layout">
 
@@ -93,10 +95,12 @@
         app:boxStrokeWidthFocused="0dp"
         app:errorEnabled="true"
         app:hintTextColor="@color/green_80"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/add_animal_button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/age_input_layout">
+        app:layout_constraintTop_toBottomOf="@+id/age_input_layout"
+        app:layout_constraintVertical_bias="0.518">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/breed_edit_text"
