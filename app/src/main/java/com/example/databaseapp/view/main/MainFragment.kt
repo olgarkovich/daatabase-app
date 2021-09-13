@@ -183,6 +183,8 @@ class MainFragment : Fragment(), View.OnClickListener, AnimalListener {
             animalsViewModel.delete(animal)
         } else {
             sqlDatabase.delete(animal)
+            action = Actions.NOTHING
+            onResume()
         }
     }
 

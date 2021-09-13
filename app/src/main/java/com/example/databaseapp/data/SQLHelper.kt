@@ -82,14 +82,16 @@ class SQLHelper(context: Context) : SQLiteOpenHelper(
         cv.put(ANIMAL_AGE, animal.age)
         cv.put(ANIMAL_BREED, animal.breed)
 
-        db.update(TABLE_NAME, cv,"id = ?", arrayOf(1.toString()))
+        db.update(TABLE_NAME, cv,"_id = ?", arrayOf(1.toString()))
+        db.close()
     }
 
     fun delete(animal: Animal) {
         val db = this.writableDatabase
 
         db.delete(
-            TABLE_NAME, "name = ? AND age = ? AND breed = ?",
+            TABLE_NAME, "$ANIMAL_NAME = ? AND $ANIMAL_AGE = ? AND $ANIMAL_BREED = ?",
             arrayOf(animal.name, animal.age, animal.breed))
+        db.close()
     }
 }
