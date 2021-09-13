@@ -50,12 +50,12 @@ class MainFragment : Fragment(), View.OnClickListener, AnimalListener {
 
         sqlDatabase = SQLHelper(requireContext())
 
-        name = arguments?.getString("name") ?: ""
-        age = arguments?.getString("age") ?: ""
-        breed = arguments?.getString("breed") ?: ""
-        currentId = arguments?.getInt("id") ?: 0
+        name = arguments?.getString(NAME) ?: ""
+        age = arguments?.getString(AGE) ?: ""
+        breed = arguments?.getString(BREED) ?: ""
+        currentId = arguments?.getInt(ID) ?: 0
 
-        action = when (arguments?.getString("action")) {
+        action = when (arguments?.getString(ACTION)) {
             Actions.ADD.name -> Actions.ADD
             Actions.UPDATE.name -> Actions.UPDATE
             else -> Actions.NOTHING
@@ -163,11 +163,11 @@ class MainFragment : Fragment(), View.OnClickListener, AnimalListener {
     override fun update(animal: Animal) {
         currentId = animal.id
         val bundle = bundleOf(
-            "action" to Actions.UPDATE.name,
-            "id" to currentId,
-            "name" to animal.name,
-            "age" to animal.age,
-            "breed" to animal.breed
+            ACTION to Actions.UPDATE.name,
+            ID to currentId,
+            NAME to animal.name,
+            AGE to animal.age,
+            BREED to animal.breed
         )
         findNavController().navigate(R.id.action_mainFragment_to_addItemFragment, bundle)
     }
@@ -180,6 +180,14 @@ class MainFragment : Fragment(), View.OnClickListener, AnimalListener {
             action = Actions.NOTHING
             onResume()
         }
+    }
+
+    companion object {
+        private const val ID = "id"
+        private const val NAME = "name"
+        private const val AGE = "age"
+        private const val BREED = "breed"
+        private const val ACTION = "action"
     }
 
 }

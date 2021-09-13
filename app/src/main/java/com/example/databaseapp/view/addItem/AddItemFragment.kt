@@ -31,12 +31,12 @@ class AddItemFragment : Fragment(), View.OnClickListener {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         owner = context as MainActivity
-        if (arguments?.getString("action") == Actions.UPDATE.name) {
+        if (arguments?.getString(ACTION) == Actions.UPDATE.name) {
             action = Actions.UPDATE
-            currentId = arguments?.getInt("id") ?: 0
-            name = arguments?.getString("name") ?: ""
-            age = arguments?.getString("age") ?: ""
-            breed = arguments?.getString("breed") ?: ""
+            currentId = arguments?.getInt(ID) ?: 0
+            name = arguments?.getString(NAME) ?: ""
+            age = arguments?.getString(AGE) ?: ""
+            breed = arguments?.getString(BREED) ?: ""
         } else {
             action = Actions.ADD
         }
@@ -77,14 +77,14 @@ class AddItemFragment : Fragment(), View.OnClickListener {
             R.id.add_animal_button -> {
                 if (checkFields()) {
                     val bundle = bundleOf(
-                        "name" to binding.nameEditText.text.toString(),
-                        "age" to binding.ageEditText.text.toString(),
-                        "breed" to binding.breedEditText.text.toString())
+                        NAME to binding.nameEditText.text.toString(),
+                        AGE to binding.ageEditText.text.toString(),
+                        BREED to binding.breedEditText.text.toString())
                     if (action == Actions.ADD) {
-                        bundle.putString("action", Actions.ADD.name)
+                        bundle.putString(ACTION, Actions.ADD.name)
                     }
                     else {
-                        bundle.putString("action", Actions.UPDATE.name)
+                        bundle.putString(ACTION, Actions.UPDATE.name)
                     }
                     findNavController().navigate(
                         R.id.action_addItemFragment_to_mainFragment,
@@ -110,6 +110,14 @@ class AddItemFragment : Fragment(), View.OnClickListener {
             Toast.makeText(requireContext(), "empty breed", Toast.LENGTH_SHORT).show()
         }
         return check
+    }
+
+    companion object {
+        private const val ID = "id"
+        private const val NAME = "name"
+        private const val AGE = "age"
+        private const val BREED = "breed"
+        private const val ACTION = "action"
     }
 
 }
