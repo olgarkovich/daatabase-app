@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.databaseapp.AnimalApplication
 import com.example.databaseapp.view.MainActivity
 import com.example.databaseapp.R
+import com.example.databaseapp.data.SQLHelper
 import com.example.databaseapp.databinding.FragmentMainBinding
 import com.example.databaseapp.model.Actions
 import com.example.databaseapp.model.Animal
@@ -28,6 +29,10 @@ class MainFragment : Fragment(), View.OnClickListener, AnimalListener {
     private val binding get() = _binding!!
 
     private lateinit var owner: MainActivity
+    private lateinit var sqlDatabase: SQLHelper
+
+    private var isRoomDatabase = true
+    private var sortMode = SortMode.NAME.name
 
     private var name = ""
     private var age = ""
@@ -42,6 +47,8 @@ class MainFragment : Fragment(), View.OnClickListener, AnimalListener {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         owner = context as MainActivity
+
+        sqlDatabase = SQLHelper(requireContext())
 
         name = arguments?.getString("name") ?: ""
         age = arguments?.getString("age") ?: ""
@@ -66,9 +73,6 @@ class MainFragment : Fragment(), View.OnClickListener, AnimalListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initView()
-
-
     }
 
     private fun initView() {
@@ -79,7 +83,13 @@ class MainFragment : Fragment(), View.OnClickListener, AnimalListener {
 
         when (action) {
             Actions.ADD -> add()
-            Actions.UPDATE -> animalsViewModel.update(Animal(currentId, name, age, breed))
+            Actions.UPDATE -> {
+                if (isRoomDatabase) {
+                    animalsViewModel.update(Animal(currentId, name, age, breed))
+                } else {
+                    sqlDatabase.update(Animal(currentId, name, age, breed))
+                }
+            }
             else -> {
                 name = ""
                 age = ""
@@ -93,8 +103,13 @@ class MainFragment : Fragment(), View.OnClickListener, AnimalListener {
             adapter = animalAdapter
         }
 
-        animalsViewModel.allAnimals.observe(owner = requireActivity()) { animals ->
-            animals.let { animalAdapter.submitList(it) }
+        if (isRoomDatabase) {
+            animalsViewModel.allAnimals.observe(owner = requireActivity()) { animals ->
+                animals.let { animalAdapter.submitList(it) }
+            }
+        } else {
+            val list = sqlDatabase.getListOfAnimals()
+            animalAdapter.submitList(list)
         }
 
         findNavController()
@@ -109,6 +124,9 @@ class MainFragment : Fragment(), View.OnClickListener, AnimalListener {
         super.onResume()
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+
+        isRoomDatabase = prefs.getBoolean("database_mode", true)
+
         Toast.makeText(
             requireContext(),
             prefs.getString("sort", SortMode.NAME.name),
@@ -119,6 +137,8 @@ class MainFragment : Fragment(), View.OnClickListener, AnimalListener {
             prefs.getBoolean("database_mode", true).toString(),
             Toast.LENGTH_SHORT
         ).show()
+
+        initView()
 
     }
 
@@ -132,14 +152,17 @@ class MainFragment : Fragment(), View.OnClickListener, AnimalListener {
             R.id.settings_icon -> {
                 owner.title?.text = resources.getString(R.string.settings)
                 owner.settingsIcon?.visibility = View.GONE
+                action = Actions.NOTHING
                 findNavController().navigate(R.id.action_mainFragment_to_settingsFragment)
             }
         }
     }
 
     override fun add() {
-        if (action == Actions.ADD) {
+        if (action == Actions.ADD && isRoomDatabase) {
             animalsViewModel.insert(Animal(name, age, breed))
+        } else {
+            sqlDatabase.insert(Animal(name, age, breed))
         }
     }
 
@@ -150,12 +173,17 @@ class MainFragment : Fragment(), View.OnClickListener, AnimalListener {
             "id" to currentId,
             "name" to animal.name,
             "age" to animal.age,
-            "breed" to animal.breed)
+            "breed" to animal.breed
+        )
         findNavController().navigate(R.id.action_mainFragment_to_addItemFragment, bundle)
     }
 
     override fun delete(animal: Animal) {
-        animalsViewModel.delete(animal)
+        if (isRoomDatabase) {
+            animalsViewModel.delete(animal)
+        } else {
+            sqlDatabase.delete(animal)
+        }
     }
 
 }
