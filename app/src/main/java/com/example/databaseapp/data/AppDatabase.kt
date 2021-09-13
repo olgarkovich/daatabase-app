@@ -35,12 +35,7 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-        suspend fun populateDatabase(animalDao: AnimalDao) {
-//            animalDao.deleteAll()
-//
-//            animalDao.insert(Animal("1", "2", "3"))
-//            animalDao.insert(Animal("4", "5", "6"))
-        }
+        suspend fun populateDatabase(animalDao: AnimalDao) { }
 
         private class AppDatabaseCallback(
             private val scope: CoroutineScope

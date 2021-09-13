@@ -70,11 +70,6 @@ class MainFragment : Fragment(), View.OnClickListener, AnimalListener {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
-
     private fun initView() {
         owner.title?.text = resources.getString(R.string.animals)
         owner.settingsIcon?.visibility = View.VISIBLE
@@ -105,10 +100,11 @@ class MainFragment : Fragment(), View.OnClickListener, AnimalListener {
 
         if (isRoomDatabase) {
             animalsViewModel.allAnimals.observe(owner = requireActivity()) { animals ->
-                animals.let { animalAdapter.submitList(it) }
+                animals.let { animalAdapter.submitList(sortList(animals)) }
             }
         } else {
-            val list = sqlDatabase.getListOfAnimals()
+            var list = sqlDatabase.getListOfAnimals()
+            list = sortList(list)
             animalAdapter.submitList(list)
         }
 
@@ -116,8 +112,15 @@ class MainFragment : Fragment(), View.OnClickListener, AnimalListener {
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_addItemFragment)
         }
+    }
 
-
+    private fun sortList(list: List<Animal>): List<Animal> {
+        when(sortMode) {
+            SortMode.NAME.name -> return list.sortedBy { it.name }
+            SortMode.AGE.name -> return list.sortedBy { it.age }
+            SortMode.BREED.name -> return list.sortedBy { it.breed }
+        }
+        return list.sortedBy { it.name }
     }
 
     override fun onResume() {
@@ -126,20 +129,11 @@ class MainFragment : Fragment(), View.OnClickListener, AnimalListener {
         val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
 
         isRoomDatabase = prefs.getBoolean("database_mode", true)
+        sortMode = prefs.getString("sort", SortMode.NAME.name) ?: SortMode.NAME.name
 
-        Toast.makeText(
-            requireContext(),
-            prefs.getString("sort", SortMode.NAME.name),
-            Toast.LENGTH_SHORT
-        ).show()
-        Toast.makeText(
-            requireContext(),
-            prefs.getBoolean("database_mode", true).toString(),
-            Toast.LENGTH_SHORT
-        ).show()
+        Toast.makeText(requireContext(), sortMode, Toast.LENGTH_SHORT).show()
 
         initView()
-
     }
 
     override fun onDestroyView() {

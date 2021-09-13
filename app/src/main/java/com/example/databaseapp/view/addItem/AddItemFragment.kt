@@ -76,23 +76,15 @@ class AddItemFragment : Fragment(), View.OnClickListener {
         when (view.id) {
             R.id.add_animal_button -> {
                 if (checkFields()) {
-                    val bundle: Bundle
+                    val bundle = bundleOf(
+                        "name" to binding.nameEditText.text.toString(),
+                        "age" to binding.ageEditText.text.toString(),
+                        "breed" to binding.breedEditText.text.toString())
                     if (action == Actions.ADD) {
-                        bundle = bundleOf(
-                            "action" to Actions.ADD.name,
-                            "name" to binding.nameEditText.text.toString(),
-                            "age" to binding.ageEditText.text.toString(),
-                            "breed" to binding.breedEditText.text.toString()
-                        )
+                        bundle.putString("action", Actions.ADD.name)
                     }
                     else {
-                        bundle = bundleOf(
-                            "action" to Actions.UPDATE.name,
-                            "id" to currentId,
-                            "name" to binding.nameEditText.text.toString(),
-                            "age" to binding.ageEditText.text.toString(),
-                            "breed" to binding.breedEditText.text.toString()
-                        )
+                        bundle.putString("action", Actions.UPDATE.name)
                     }
                     findNavController().navigate(
                         R.id.action_addItemFragment_to_mainFragment,
